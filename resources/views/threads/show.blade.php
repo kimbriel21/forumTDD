@@ -9,17 +9,34 @@
 
                     <div class="card-body">
                             <article>
-                                <h4>
-                                    <a href="/thread/{{$thread->id}}">{{$thread->title}}</a>
-                                </h4>
+
                                 <div class="body">
-                                    {{$thread->body}}
+                                    {{$thread->body}} {{$thread->id}}
                                 </div>
-                                <hr/>
+
                             </article>
                     </div>
                 </div>
             </div>
+
         </div>
+        @foreach($thread->replies as $reply)
+        <div class="row justify-content-center mt-3">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-body">
+                        <article>
+
+                            <div class="body">
+                                {{$thread->body}}
+                            </div>
+
+                        </article>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        @endforeach
     </div>
 @endsection

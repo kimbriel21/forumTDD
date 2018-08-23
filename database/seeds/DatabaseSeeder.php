@@ -13,6 +13,10 @@ class DatabaseSeeder extends Seeder
     {
         factory(\App\User::class, 10)->create();
         factory(\App\Thread::class, 10)->create();
-        factory(\App\Reply::class, 10)->create();
+
+        foreach (\App\Thread::get() as $thread)
+        {
+            factory(\App\Reply::class, 10)->create(['thread_id' => $thread->id]);
+        }
     }
 }

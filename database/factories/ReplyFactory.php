@@ -1,8 +1,7 @@
 <?php
 
 use Faker\Generator as Faker;
-use App\User;
-use App\Thread;
+
 
 $factory->define(App\Reply::class, function (Faker $faker) {
     return [

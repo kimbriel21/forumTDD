@@ -10,24 +10,32 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class ThreadsTest extends TestCase
 {
-
+    public function setUp()
+    {
+        parent::setUp();
+        $this->thread = factory('App\Thread')->create();
+    }
 
     /** @test*/
     public function a_user_can_view_all_threads()
     {
-        $thread = factory('App\Thread')->create();
-        $threadCount = Thread::count();
-        $response = $this->get('/threads');
-        $response->assertSee($thread->title);
-        $this->assertEquals($threadCount, $threadCount);
+        $this->get('/threads')
+            ->assertSee($this->thread->title);
 
     }
 
     /** @test*/
     public function a_user_can_view_one_thread()
     {
-        $thread = factory('App\Thread')->create();
-        $response2 = $this->get('/threads/' . $thread->id);
-        $response2->assertSee($thread->title);
+        $this->get('/thread/' . $this->thread->id)
+            ->assertSee($this->thread->body);
+    }
+
+    /** @test*/
+    public function a_user_can_read_and_reply_that_are_associated_with_the_threads()
+    {
+        $reply = factory('App\Reply')->create(['thread_id' => $this->thread->id]);
+        $this->get('/thread/' . $this->thread->id)
+        ->assertSee($reply->body);
     }
 }
